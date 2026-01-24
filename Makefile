@@ -73,4 +73,4 @@ clean-generated:
 #
 .PHONY: clean-tools
 clean-tools:
-	rm -f bin/kubectl bin/kind
+	rm -rf bin/tools
