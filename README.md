@@ -37,7 +37,7 @@ Add the line number where each func is defined as 'line':
 
 Roughly lists the names and values of variables exported in bash format. The search is restricted only to files tracked by git.
 
-    ndql query 'select grep("export (?P<name>[^=]+)=(?P<value>.+)", "name=$name,value=$value") where not is_dir' @-
+    git ls-files | ndql query 'select grep("export (?P<name>[^=]+)=(?P<value>.+)", "name=$name,value=$value") where not is_dir' @-
 
 Usage:
   ndql query QUERT [PATH] [flags]
