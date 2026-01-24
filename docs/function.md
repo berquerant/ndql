@@ -1,12 +1,5 @@
 # Functions
 
-<details>
-<summary>Index</summary>
-
-[[_TOC_]]
-
-</details>
-
 ## grep(pattern: String, template: String) -> []Node
 
 This is one of the available generators.
