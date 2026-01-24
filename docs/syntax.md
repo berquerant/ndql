@@ -10,30 +10,31 @@
 
 ## Operators
 
-- AND
-- OR
-- XOR
-- + (binary)
-- - (binary)
-- *
-- /
-- %
-- <<
-- >>
-- <
-- <=
-- =
-- <>
-- >=
-- >
-- CASE
-- IS NULL, IS NOT NULL
-- IS TRUE, IS FALSE
-- REGEXP
-- LIKE
-- BETWEEN
-- - (unary)
-- ~
+- `AND`
+- `OR`
+- `XOR`
+- `+` (binary)
+- `-` (binary)
+- `*`
+- `/`
+- `%`
+- `<<`
+- `>>`
+- `<`
+- `<=`
+- `=`
+- `<>`
+- `>=`
+- `>`
+- `CASE`
+- `IS NULL`
+- `IS TRUE`
+- `IS FALSE`
+- `REGEXP`
+- `LIKE`
+- `BETWEEN`
+- `-` (unary)
+- `~`
 
 ## Functions
 
