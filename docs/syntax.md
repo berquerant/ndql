@@ -1,0 +1,122 @@
+# Syntax
+
+`ndql` uses a SQL-based syntax.
+
+## Implementation Status
+
+- Statements: Currently, only the SELECT statement is implemented.
+- Clauses: FROM and WHERE clauses are available. Other clauses (e.g., GROUP BY, ORDER BY, JOIN) are not yet supported.
+- Operators, Functions: Some operators and functions are not yet implemented. Even if implemented, the behavior may differ from standard SQL specifications.
+
+## Operators
+
+- AND
+- OR
+- XOR
+- + (binary)
+- - (binary)
+- *
+- /
+- %
+- <<
+- >>
+- <
+- <=
+- =
+- <>
+- >=
+- >
+- CASE
+- IS NULL, IS NOT NULL
+- IS TRUE, IS FALSE
+- REGEXP
+- LIKE
+- BETWEEN
+- - (unary)
+- ~
+
+## Functions
+
+- grep(pattern: String, template: String) -> []Node
+- tmpl(template: String) -> []Node
+- sh(script: String) -> []Node
+- lua(script: String, entrypoint: String) -> []Node
+- expr(expression: String) -> []Node
+- to_int(value) -> Int
+- to_float(value) -> Float
+- to_bool(value) -> Bool
+- to_string(value) -> String
+- to_time(value) -> Time
+- to_duration(value) -> Duration
+- least(value...)
+- greatest(value...)
+- coalesce(value...)
+- if(condition, then, else)
+- ifnull(expr1, expr2)
+- nullif(expr1, expr2)
+- abs(value: Float | Int) -> Float
+- sqrt(value: Float | Int) -> Float
+- degrees(value: Float | Int) -> Float
+- radians(value: Float | Int) -> Float
+- acos(value: Float | Int) -> Float
+- asin(value: Float | Int) -> Float
+- atan(value: Float | Int) -> Float
+- cos(value: Float | Int) -> Float
+- sin(value: Float | Int) -> Float
+- tan(value: Float | Int) -> Float
+- cot(value: Float | Int) -> Float
+- ln(value: Float | Int) -> Float
+- log2(value: Float | Int) -> Float
+- log10(value: Float | Int) -> Float
+- exp(value: Float | Int) -> Float
+- ceil(value: Float | Int) -> Float
+- floor(value: Float | Int) -> Float
+- round(value: Float | Int) -> Float
+- atan2(y: Float | Int, x: Float | Int) -> Float
+- pow(x: Float | Int, y: Float | Int) -> Float
+- e() -> Float
+- pi() -> Float
+- rand() -> Float
+- len(value: String) -> Int
+- size(value: String) -> Int
+- regexp_instr(string: String, pattern: String) -> Int
+- regexp_substr(string: String, pattern: String) -> Int
+- regexp_replace(string: String, pattern: String, replacement: String) -> String
+- regexp_like(string: String, pattern: String) -> Bool
+- format(format: String, args...) -> String
+- lower(value: String) -> String
+- upper(value: String) -> String
+- sha2(value: String) -> String
+- concat_ws(separator: String, args...: []String) -> String
+- instr(string: String, sub: String) -> Int
+- substr(string: String, position: Int) -> String
+- substr(string: String, position: Int, length: Int) -> String
+- replace(string: String, from: String, to: String) -> String
+- trim(string: String) -> String
+- trim(string: String, cutset: String) -> String
+- timeformat(t: Time, format: String) -> String
+- year(t: Time) -> int
+- month(t: Time) -> int
+- day(t: Time) -> int
+- hour(t: Time) -> int
+- minute(t: Time) -> int
+- second(t: Time) -> int
+- dayofweek(t: Time) -> int
+- dayofyear(t: Time) -> int
+- newtime(year: Int) -> Time
+- newtime(year: Int, month: Int) -> Time
+- newtime(year: Int, month: Int, day: Int) -> Time
+- newtime(year: Int, month: Int, day: Int, hour: Int) -> Time
+- newtime(year: Int, month: Int, day: Int, hour: Int, minute: Int) -> Time
+- newtime(year: Int, month: Int, day: Int, hour: Int, minute: Int, second: Int) -> Time
+- sleep(second: Int | Float | Duration) -> Int
+- now() -> Time
+- dir(path: String) -> String
+- basename(path: String) -> String
+- extension(path: String) -> String
+- abspath(path: String) -> String
+- relpath(path: String, base: String) -> String
+- inverse(value: Float | Int) -> Float
+- inverse(value: String) -> String
+- env(name: String) -> String
+- envor(name: String, default: String) -> String

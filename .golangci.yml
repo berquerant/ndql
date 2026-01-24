@@ -1,0 +1,30 @@
+version: "2"
+
+linters:
+  settings:
+    godox:
+      keywords:
+        - NOTE
+        - TODO
+        - FIXME
+        - BUG
+        - DEPRECATED
+        - Deprecated
+  exclusions:
+    paths:
+      - ".*generated.*"
+      - ".*/tmp/.*"
+    rules:
+      - linters:
+          - staticcheck
+        text: "QF1001:" # could apply De Morgan's law
+      - linters:
+          - staticcheck
+        text: "ST1001:" # should not use dot imports
+        path: pkg/tree
+
+run:
+  concurrency: 4
+  timeout: 3m
+  allow-parallel-runners: true
+  tests: false
