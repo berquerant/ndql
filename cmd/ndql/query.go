@@ -37,9 +37,13 @@ Add the line number where each func is defined as 'line':
 
     ndql query 'select path, func from (select grep("func (?P<name>[^(]+)", "func=$name") where not is_dir and path not like "%%_test.go")' dir | ndql query 'select sh("echo line=$(grep -n \"func $(get func)\" $(get path) | cut -d: -f1)")' -i@-
 
-Roughly lists the names and values of variables exported in bash format. The search is restricted only to files tracked by git.
+Roughly lists the names and values of variables exported in bash format. The search is restricted only to files tracked by git:
 
     git ls-files | ndql query 'select grep("export (?P<name>[^=]+)=(?P<value>.+)", "name=$name,value=$value") where not is_dir' @-
+
+Extracts metadata from mp3 and m4a files using ffprobe:
+
+    ndql query 'select sh("ffprobe -v error -hide_banner -show_entries format -of json=c=1 \"$(get path)\" | jq .format.tags -c") where not is_dir and extension(path) in (".mp3", ".m4a")' dir
 `, config.DescribeSourceUsage()),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		return runMain(cmd, args, config.ModeQuery)
