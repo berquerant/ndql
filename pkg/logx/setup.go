@@ -22,7 +22,10 @@ var (
 	level = slog.LevelInfo
 )
 
-func Setup(w io.Writer, debug, trace bool) {
+func Setup(w io.Writer, debug, trace, quiet bool) {
+	if quiet {
+		w = io.Discard
+	}
 	if debug {
 		level = slog.LevelDebug
 	}

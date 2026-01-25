@@ -12,6 +12,7 @@ type Config struct {
 	Debug   bool `name:"debug" usage:"enable debug logs"`
 	Trace   bool `name:"trace" usage:"enable trace logs"`
 	Verbose bool `name:"verbose" short:"v" usage:"enable verbose output"`
+	Quiet   bool `name:"quiet" short:"q" usage:"quiet logs"`
 
 	Index     string `name:"index" short:"i" usage:"index source; exclusive with paths"`
 	RawOutput bool   `name:"raw" usage:"enable raw output"`
@@ -34,7 +35,7 @@ func (c *Config) Close() error {
 }
 
 func (c Config) SetupLogger() {
-	logx.Setup(c.Stderr, c.Debug, c.Trace)
+	logx.Setup(c.Stderr, c.Debug, c.Trace, c.Quiet)
 }
 
 func (c *Config) SetupQuery() error {
