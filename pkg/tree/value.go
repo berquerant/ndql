@@ -67,7 +67,12 @@ type ValueContainer struct {
 	*N
 }
 
-func AsValueContainer(n *N) *ValueContainer { return &ValueContainer{n} }
+func AsValueContainer(n *N) *ValueContainer {
+	if n == nil {
+		n = node.New()
+	}
+	return &ValueContainer{n}
+}
 
 func (c *ValueContainer) SetContainerValue(v ND)        { c.Set(NodeValueKey, v) }
 func (c *ValueContainer) GetContainerValue() (ND, bool) { return c.Get(NodeValueKey) }
