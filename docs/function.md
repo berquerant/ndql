@@ -28,7 +28,7 @@ For example, the following expression sets the type attribute to "dir" if the is
 tmpl("type={{if .is_dir}}dir{{else}}file{{end}}")'
 ```
 
-If `@file` is specified as pattern, the contents of the file will be used.
+If `@file` is specified as template, the contents of the file will be used.
 
 ## sh(script: String) -> []Node
 
