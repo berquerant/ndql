@@ -1366,6 +1366,20 @@ regexp_replace(k1, "llo", "y") as k4`,
 			}),
 		},
 		{
+			title: "strtotime",
+			data: newNodes([]map[string]node.Data{
+				{
+					"k1": node.String("2026-01-02T10:00:00"),
+				},
+			}),
+			query: `select strtotime(k1, "2006-01-02T15:04:05") as k1`,
+			want: newNodes([]map[string]node.Data{
+				{
+					"k1": node.Time(util.Must(time.Parse(time.DateTime, "2026-01-02 10:00:00"))),
+				},
+			}),
+		},
+		{
 			title: "timeformat",
 			data: newNodes([]map[string]node.Data{
 				{

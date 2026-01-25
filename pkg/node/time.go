@@ -7,6 +7,23 @@ import (
 
 func Now() *Op { return Time(time.Now()).AsOp() }
 
+func (v *Op) StrToTime(other *Op) (*Op, error) {
+	switch d := v.data.(type) {
+	case String:
+		switch e := other.data.(type) {
+		case String:
+			str := d.Raw()
+			format := e.Raw()
+			t, err := time.ParseInLocation(format, str, time.UTC)
+			if err != nil {
+				return nil, unavailableErr(err, "StrToTime", v, other)
+			}
+			return Time(t).AsOp(), nil
+		}
+	}
+	return nil, unavailable("StrToTime", v, other)
+}
+
 func (v *Op) TimeFormat(other *Op) (*Op, error) {
 	switch d := v.data.(type) {
 	case Time:

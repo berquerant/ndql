@@ -95,6 +95,7 @@
 - replace(string: String, from: String, to: String) -> String
 - trim(string: String) -> String
 - trim(string: String, cutset: String) -> String
+- strtotime(string: String, format: String) -> Time
 - timeformat(t: Time, format: String) -> String
 - year(t: Time) -> int
 - month(t: Time) -> int

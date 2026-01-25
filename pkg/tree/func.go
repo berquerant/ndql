@@ -89,6 +89,7 @@ const (
 	FuncReplace       = "replace"
 	FuncTrim          = "trim"
 
+	FuncStrToTime  = "strtotime"
 	FuncTimeFormat = "timeformat"
 	FuncYear       = "year"
 	FuncMonth      = "month"
@@ -230,6 +231,8 @@ func (v TreeVisitor) visitFuncCallExpr(n *FuncCallExpr) (NFunction, error) {
 		return v.funcCallReplace(args)
 	case FuncTrim:
 		return v.funcCallTrim(args)
+	case FuncStrToTime:
+		return v.funcCallStrToTime(args)
 	case FuncTimeFormat:
 		return v.funcCallTimeFormat(args)
 	case FuncYear:
@@ -775,6 +778,13 @@ func (v TreeVisitor) funcCallTrim(args []ExprNode) (NFunction, error) {
 // time
 //
 
+func (v TreeVisitor) funcCallStrToTime(args []ExprNode) (NFunction, error) {
+	return v.newVariadicArgUnaryRetFunction(args, FuncStrToTime, 2, 2,
+		AsVariadicArgUnaryRetNodeDataFunction(func(x ...*OP) (*OP, error) {
+			return x[0].StrToTime(x[1])
+		}),
+	)
+}
 func (v TreeVisitor) funcCallTimeFormat(args []ExprNode) (NFunction, error) {
 	return v.newVariadicArgUnaryRetFunction(args, FuncTimeFormat, 2, 2,
 		AsVariadicArgUnaryRetNodeDataFunction(func(x ...*OP) (*OP, error) {

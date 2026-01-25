@@ -121,6 +121,10 @@ The number of bytes in a String.
 
 [fmt.Sprintf](https://pkg.go.dev/fmt#Sprintf).
 
+## strtotime(string: String, format: String) -> Time
+
+[time.Parse](https://pkg.go.dev/time#Parse).
+
 ## timeformat(t: Time, format: String) -> String
 
 [time.Fomat](https://pkg.go.dev/time#Time.Format).

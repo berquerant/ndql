@@ -8,6 +8,32 @@ import (
 	"github.com/berquerant/ndql/pkg/util"
 )
 
+func TestStrToTime(t *testing.T) {
+	bb := defaultFailedBinaryOpTestcaseBuilder()
+	bb.
+		nullPerm().
+		perm(bb.except(bb.s())...).
+		pairPermExcept(bb.s(), bb.s())
+	runBinaryOpTest(t, func(left, right node.Data) (node.Data, error) {
+		x, err := left.AsOp().StrToTime(right.AsOp())
+		if err != nil {
+			return nil, err
+		}
+		return x.AsData(), nil
+	}, bb.build(), []*binaryOpTestacase{
+		{
+			left:  node.String("2026-01-02 10:00:00"),
+			right: node.String(time.DateTime),
+			want:  node.Time(util.Must(time.Parse(time.DateTime, "2026-01-02 10:00:00"))),
+		},
+		{
+			left:  node.String("2026-01-02T10:00:00Z"),
+			right: node.String(time.RFC3339),
+			want:  node.Time(util.Must(time.Parse(time.DateTime, "2026-01-02 10:00:00"))),
+		},
+	})
+}
+
 func TestTimeFormat(t *testing.T) {
 	bb := defaultFailedBinaryOpTestcaseBuilder()
 	bb.
