@@ -3,6 +3,7 @@ package tree
 import (
 	"context"
 	"errors"
+	"log/slog"
 
 	"github.com/berquerant/ndql/pkg/logx"
 	. "github.com/pingcap/tidb/pkg/parser/ast"
@@ -22,7 +23,7 @@ func AsIter(ctx context.Context, it NIter, n Node) (NIter, error) {
 				continue
 			}
 			if err != nil {
-				logx.Error(err, "failed to yield node", logx.JSON("node", x))
+				slog.Debug("failed to yield node", logx.JSON("node", x), logx.Err(err))
 				continue
 			}
 			for _, r := range rs {
