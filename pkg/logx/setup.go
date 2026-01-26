@@ -23,14 +23,14 @@ var (
 )
 
 func Setup(w io.Writer, debug, trace, quiet bool) {
-	if quiet {
-		w = io.Discard
-	}
 	if debug {
 		level = slog.LevelDebug
 	}
 	if trace {
 		level = LevelTrace
+	}
+	if quiet {
+		level = slog.LevelError
 	}
 	handler := slog.NewTextHandler(w, &slog.HandlerOptions{
 		Level: level,

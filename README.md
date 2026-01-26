@@ -50,7 +50,7 @@ Flags:
       --debug          enable debug logs
   -h, --help           help for query
   -i, --index string   index source; exclusive with paths
-  -q, --quiet          quiet logs
+  -q, --quiet          quiet logs except errors
       --raw            enable raw output
       --trace          enable trace logs
   -v, --verbose        enable verbose output
