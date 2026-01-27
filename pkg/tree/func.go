@@ -85,6 +85,7 @@ const (
 	FuncSha2          = "sha2"
 	FuncConcatWs      = "concat_ws"
 	FuncInstr         = "instr"
+	FuncInstrCount    = "instr_count"
 	FuncSubstr        = "substr"
 	FuncSubstrIndex   = "substr_index"
 	FuncReplace       = "replace"
@@ -226,6 +227,8 @@ func (v TreeVisitor) visitFuncCallExpr(n *FuncCallExpr) (NFunction, error) {
 		return v.funcCallConcatWs(args)
 	case FuncInstr:
 		return v.funcCallInstr(args)
+	case FuncInstrCount:
+		return v.funcCallInstrCount(args)
 	case FuncSubstr:
 		return v.funcCallSubstr(args)
 	case FuncSubstrIndex:
@@ -752,6 +755,13 @@ func (v TreeVisitor) funcCallInstr(args []ExprNode) (NFunction, error) {
 	return v.newVariadicArgUnaryRetFunction(args, FuncInstr, 2, 2,
 		AsVariadicArgUnaryRetNodeDataFunction(func(x ...*OP) (*OP, error) {
 			return x[0].Instr(x[1])
+		}),
+	)
+}
+func (v TreeVisitor) funcCallInstrCount(args []ExprNode) (NFunction, error) {
+	return v.newVariadicArgUnaryRetFunction(args, FuncInstrCount, 2, 2,
+		AsVariadicArgUnaryRetNodeDataFunction(func(x ...*OP) (*OP, error) {
+			return x[0].InstrCount(x[1])
 		}),
 	)
 }

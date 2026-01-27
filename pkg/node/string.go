@@ -182,6 +182,17 @@ func (v *Op) Instr(other *Op) (*Op, error) {
 	return nil, unavailable("Instr", v, other)
 }
 
+func (v *Op) InstrCount(other *Op) (*Op, error) {
+	switch d := v.data.(type) {
+	case String:
+		switch e := other.data.(type) {
+		case String:
+			return Int(int64(strings.Count(d.Raw(), e.Raw()))).AsOp(), nil
+		}
+	}
+	return nil, unavailable("Instr", v, other)
+}
+
 const substrMaxLength = 2048
 
 func (v *Op) Substr(other ...*Op) (*Op, error) {

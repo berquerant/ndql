@@ -1326,6 +1326,20 @@ regexp_count(k1, "llo") as k5`,
 			}),
 		},
 		{
+			title: "instr_count",
+			data: newNodes([]map[string]node.Data{
+				{
+					"k1": node.String("str"),
+				},
+			}),
+			query: `select instr_count(k1, "t") as k1`,
+			want: newNodes([]map[string]node.Data{
+				{
+					"k1": node.Int(1),
+				},
+			}),
+		},
+		{
 			title: "substr",
 			data: newNodes([]map[string]node.Data{
 				{

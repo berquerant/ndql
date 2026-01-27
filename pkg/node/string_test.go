@@ -437,6 +437,35 @@ func TestInstr(t *testing.T) {
 	})
 }
 
+func TestInstrCount(t *testing.T) {
+	bb := defaultFailedBinaryOpTestcaseBuilder()
+	bb.
+		perm(bb.except(bb.s())...)
+	runBinaryOpTest(t, func(left, right node.Data) (node.Data, error) {
+		x, err := left.AsOp().InstrCount(right.AsOp())
+		if err != nil {
+			return nil, err
+		}
+		return x.AsData(), nil
+	}, bb.build(), []*binaryOpTestacase{
+		{
+			left:  node.String("a"),
+			right: node.String("a"),
+			want:  node.Int(1),
+		},
+		{
+			left:  node.String("b"),
+			right: node.String("a"),
+			want:  node.Int(0),
+		},
+		{
+			left:  node.String("abca"),
+			right: node.String("a"),
+			want:  node.Int(2),
+		},
+	})
+}
+
 func TestSubstr(t *testing.T) {
 	runVariadicOpTest(t, func(v ...node.Data) (node.Data, error) {
 		xs := DataListToOpList(v...)
