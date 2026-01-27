@@ -74,6 +74,7 @@ const (
 
 	FuncLen           = "len"
 	FuncSize          = "size"
+	FuncRegexpCount   = "regexp_count"
 	FuncRegexpInstr   = "regexp_instr"
 	FuncRegexpSubstr  = "regexp_substr"
 	FuncRegexpReplace = "regexp_replace"
@@ -203,6 +204,8 @@ func (v TreeVisitor) visitFuncCallExpr(n *FuncCallExpr) (NFunction, error) {
 		return v.funcCallLen(args)
 	case FuncSize:
 		return v.funcCallSize(args)
+	case FuncRegexpCount:
+		return v.funcCallRegexpCount(args)
 	case FuncRegexpInstr:
 		return v.funcCallRegexpInstr(args)
 	case FuncRegexpSubstr:
@@ -702,6 +705,13 @@ func (v TreeVisitor) funcCallUpper(args []ExprNode) (NFunction, error) {
 }
 func (v TreeVisitor) funcCallSha2(args []ExprNode) (NFunction, error) {
 	return v.newUnaryArgUnaryRetFunction(args, FuncSha2, AsUnaryArgUnaryRetNodeDataFunction(func(x *OP) (*OP, error) { return x.Sha2() }))
+}
+func (v TreeVisitor) funcCallRegexpCount(args []ExprNode) (NFunction, error) {
+	return v.newVariadicArgUnaryRetFunction(args, FuncRegexpCount, 2, 2,
+		AsVariadicArgUnaryRetNodeDataFunction(func(x ...*OP) (*OP, error) {
+			return x[0].RegexpCount(x[1])
+		}),
+	)
 }
 func (v TreeVisitor) funcCallRegexpInstr(args []ExprNode) (NFunction, error) {
 	return v.newVariadicArgUnaryRetFunction(args, FuncRegexpInstr, 2, 2,

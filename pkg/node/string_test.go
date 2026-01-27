@@ -122,6 +122,45 @@ func TestRegexp(t *testing.T) {
 	})
 }
 
+func TestRegexpCount(t *testing.T) {
+	bb := defaultFailedBinaryOpTestcaseBuilder()
+	bb.
+		perm(bb.except(bb.s())...)
+	runBinaryOpTest(t, func(left, right node.Data) (node.Data, error) {
+		x, err := left.AsOp().RegexpCount(right.AsOp())
+		if err != nil {
+			return nil, err
+		}
+		return x.AsData(), nil
+	}, bb.build(), []*binaryOpTestacase{
+		{
+			left:  node.String("abc"),
+			right: node.String("a"),
+			want:  node.Int(1),
+		},
+		{
+			left:  node.String("abc"),
+			right: node.String("b"),
+			want:  node.Int(1),
+		},
+		{
+			left:  node.String("abc"),
+			right: node.String("b."),
+			want:  node.Int(1),
+		},
+		{
+			left:  node.String("abc"),
+			right: node.String("x.*"),
+			want:  node.Int(0),
+		},
+		{
+			left:  node.String("abc"),
+			right: node.String("."),
+			want:  node.Int(3),
+		},
+	})
+}
+
 func TestRegexpInstr(t *testing.T) {
 	bb := defaultFailedBinaryOpTestcaseBuilder()
 	bb.

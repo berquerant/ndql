@@ -80,6 +80,7 @@
 - rand() -> Float
 - len(value: String) -> Int
 - size(value: String) -> Int
+- regexp_count(string: String, pattern: String) -> Int
 - regexp_instr(string: String, pattern: String) -> Int
 - regexp_substr(string: String, pattern: String) -> Int
 - regexp_replace(string: String, pattern: String, replacement: String) -> String

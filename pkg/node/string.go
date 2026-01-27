@@ -51,6 +51,20 @@ func (v *Op) Regexp(other *Op) (*Op, error) {
 	return nil, unavailable("Regexp", v, other)
 }
 
+func (v *Op) RegexpCount(other *Op) (*Op, error) {
+	if d, ok := v.String(); ok {
+		if e, ok := other.String(); ok {
+			expr, err := regexpx.Compile(e.Raw())
+			if err != nil {
+				return nil, withUnavailableErr(err, "RegexpCount", []*Op{v, other}, "invalid expr")
+			}
+			r := expr.FindAllStringSubmatchIndex(d.Raw(), -1)
+			return Int(int64(len(r))).AsOp(), nil
+		}
+	}
+	return nil, unavailable("RegexpCount", v, other)
+}
+
 func (v *Op) RegexpInstr(other *Op) (*Op, error) {
 	if d, ok := v.String(); ok {
 		if e, ok := other.String(); ok {
