@@ -190,7 +190,7 @@ func (v *Op) InstrCount(other *Op) (*Op, error) {
 			return Int(int64(strings.Count(d.Raw(), e.Raw()))).AsOp(), nil
 		}
 	}
-	return nil, unavailable("Instr", v, other)
+	return nil, unavailable("InstrCount", v, other)
 }
 
 const substrMaxLength = 2048
