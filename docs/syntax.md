@@ -91,6 +91,7 @@
 - sha2(value: String) -> String
 - concat_ws(separator: String, args...: []String) -> String
 - instr(string: String, sub: String) -> Int
+- instr_count(string: String, sub: String) -> Int
 - substr(string: String, position: Int) -> String
 - substr(string: String, position: Int, length: Int) -> String
 - replace(string: String, from: String, to: String) -> String
