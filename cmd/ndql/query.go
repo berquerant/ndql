@@ -8,7 +8,7 @@ import (
 )
 
 var queryCmd = &cobra.Command{
-	Use:   "query QUERT [PATH]",
+	Use:   "query QUERY [PATH]",
 	Short: "Run query",
 	Long: fmt.Sprintf(`Run query.
 

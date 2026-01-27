@@ -44,7 +44,7 @@ Extracts metadata from mp3 and m4a files using ffprobe:
     ndql query 'select sh("ffprobe -v error -hide_banner -show_entries format -of json=c=1 \"$(get path)\" | jq .format.tags -c") where not is_dir and extension(path) in (".mp3", ".m4a")' dir
 
 Usage:
-  ndql query QUERT [PATH] [flags]
+  ndql query QUERY [PATH] [flags]
 
 Flags:
       --debug          enable debug logs
