@@ -11,7 +11,7 @@ current_tag() {
 readonly version_package="github.com/berquerant/ndql/version"
 
 ldflags() {
-    echo "-X ${version_package}.Version=$(current_tag) -X ${version_package}.Revision=$(short_sha)"
+    echo "-s -w -X ${version_package}.Version=$(current_tag) -X ${version_package}.Revision=$(short_sha)"
 }
 
 build() {
