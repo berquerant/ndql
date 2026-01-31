@@ -73,42 +73,42 @@ func (g ShellGenTemplate) generateScript() string {
 	}, "\n")
 }
 
-const shellGenTemplateFunc = `key_has_table() {
+const shellGenTemplateFunc = `__key_has_table() {
   echo "$1" | grep -q '%[1]s'
 }
-key_from_name() {
+__key_from_name() {
   echo "$1" | sed 's|\.|%[1]s|g'
 }
-name_from_key() {
+__name_from_key() {
   echo "$1" | sed 's|%[1]s|\.|g'
 }
-key_suffix() {
-  name_from_key "$1" | cut -d "." -f 2-
+__key_suffix() {
+  __name_from_key "$1" | cut -d "." -f 2-
 }
 get() {
-  local -r name="$1"
-  local -r key="$(key_from_name "$name")"
-  if key_has_table "$key" ; then
-    echo "${!key}"
+  local -r __name="$1"
+  local -r __key="$(__key_from_name "$__name")"
+  if __key_has_table "$__key" ; then
+    echo "${!__key}"
     return
   fi
-  local -r suffix="$(key_suffix "$key")"
-  for varname in $(compgen -v | grep -E "%[1]s${suffix}$") ; do
-    if ! key_has_table "$varname" ; then
+  local -r __suffix="$(__key_suffix "$__key")"
+  for __varname in $(compgen -v | grep -E "%[1]s${__suffix}$") ; do
+    if ! __key_has_table "$__varname" ; then
       continue
     fi
-    echo "${!varname}"
+    echo "${!__varname}"
     return
   done
-  echo "${!suffix}"
+  echo "${!__suffix}"
 }
 get_or() {
-  local -r name="$1"
-  local -r default_value="$2"
-  local r="$(get "$name")"
-  if [[ "$r" == "" ]] ; then
-    echo "$default_value"
+  local -r __name="$1"
+  local -r __default_value="$2"
+  local __result="$(get "$__name")"
+  if [[ "$__result" == "" ]] ; then
+    echo "$__default_value"
   else
-    echo "$r"
+    echo "$__result"
   fi
 }`
