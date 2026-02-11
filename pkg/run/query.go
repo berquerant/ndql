@@ -7,6 +7,7 @@ import (
 	"github.com/berquerant/ndql/pkg/iterx"
 	"github.com/berquerant/ndql/pkg/parse"
 	"github.com/berquerant/ndql/pkg/tree"
+	"golang.org/x/sync/errgroup"
 )
 
 func (r *runner) query(ctx context.Context) error {
@@ -26,19 +27,32 @@ func (r *runner) query(ctx context.Context) error {
 	}
 	cit := iterx.NewClonableIter(it)
 	defer cit.Close()
-	rit := make([]tree.NIter, len(p.Nodes))
+
+	var (
+		eg, eCtx = errgroup.WithContext(ctx)
+		recvCs   = make([]chan *tree.N, len(p.Nodes))
+	)
+	for i := range p.Nodes {
+		recvC := make(chan *tree.N, 100)
+		recvCs[i] = recvC
+		eg.Go(func() error {
+			for n := range recvC {
+				r.WriteNode(n)
+			}
+			return nil
+		})
+	}
+
+	concurrency := int(r.Concurrency)
 	for i, n := range p.Nodes {
 		vit := cit.Clone()
-		xit, err := tree.AsIter(ctx, vit.Values(), n)
-		if err != nil {
-			return fmt.Errorf("%w: node[%d]", err, i)
-		}
-		rit[i] = xit
+		eg.Go(func() error {
+			if err := tree.AsChan(eCtx, vit.Values(), n, concurrency, recvCs[i]); err != nil {
+				return fmt.Errorf("%w: node[%d]", err, i)
+			}
+			return nil
+		})
 	}
-	for _, it := range rit {
-		for n := range it {
-			r.WriteNode(n)
-		}
-	}
-	return nil
+
+	return eg.Wait()
 }

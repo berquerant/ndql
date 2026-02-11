@@ -28,6 +28,82 @@ func newNodes(v []map[string]node.Data) []*tree.N {
 	return r
 }
 
+func TestAsChan(t *testing.T) {
+	var (
+		newNodeList = func(n int) []*tree.N {
+			r := make([]*tree.N, n)
+			for i := range n {
+				r[i] = node.FromMap(map[string]node.Data{
+					"i": node.Int(i),
+				})
+			}
+			return r
+		}
+	)
+	for _, tc := range []struct {
+		concurrency int
+		n           int
+	}{
+		{
+			concurrency: 1,
+			n:           0,
+		},
+		{
+			concurrency: 1,
+			n:           1,
+		},
+		{
+			concurrency: 1,
+			n:           100,
+		},
+		{
+			concurrency: 2,
+			n:           0,
+		},
+		{
+			concurrency: 2,
+			n:           1,
+		},
+		{
+			concurrency: 2,
+			n:           100,
+		},
+		{
+			concurrency: 4,
+			n:           1000,
+		},
+	} {
+		t.Run(fmt.Sprintf("n%d_concurrency%d", tc.n, tc.concurrency), func(t *testing.T) {
+			r, err := parse.NewSQLParser().Parse(`select *`)
+			if !assert.Nil(t, err, "query syntax: %s", errorx.AsString(err)) {
+				return
+			}
+			var (
+				data  = newNodeList(tc.n)
+				gotC  = make(chan *tree.N, 100)
+				got   = []*tree.N{}
+				doneC = make(chan struct{})
+			)
+			go func() {
+				for x := range gotC {
+					got = append(got, x)
+				}
+				close(doneC)
+			}()
+			if !assert.Nil(t, tree.AsChan(context.TODO(), slices.Values(data), r.Nodes[0], tc.concurrency, gotC)) {
+				return
+			}
+			<-doneC
+			slices.SortStableFunc(got, func(a, b *tree.N) int {
+				x := util.MustOK(a.Get("i")).Any().(int64)
+				y := util.MustOK(b.Get("i")).Any().(int64)
+				return int(x - y)
+			})
+			assert.Equal(t, data, got)
+		})
+	}
+}
+
 func TestAsIter(t *testing.T) {
 	const (
 		testEnvKey   = "TestEnvKey1"

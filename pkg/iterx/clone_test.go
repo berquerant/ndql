@@ -3,6 +3,7 @@ package iterx_test
 import (
 	"iter"
 	"slices"
+	"sync"
 	"testing"
 
 	"github.com/berquerant/ndql/pkg/iterx"
@@ -73,5 +74,30 @@ func TestClonableIter(t *testing.T) {
 
 		cit3 := cit.Clone()
 		assert.Equal(t, []int{1, 2, 3}, slices.Collect(cit3.Values()))
+	})
+
+	t.Run("concurrent", func(t *testing.T) {
+		want := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+		cit := iterx.NewClonableIter(slices.Values(want))
+		defer cit.Close()
+		cit2 := cit.Clone()
+
+		var (
+			r1, r2 []int
+			wg     sync.WaitGroup
+		)
+		wg.Go(func() {
+			for x := range cit.Values() {
+				r1 = append(r1, x)
+			}
+		})
+		wg.Go(func() {
+			for x := range cit2.Values() {
+				r2 = append(r2, x)
+			}
+		})
+		wg.Wait()
+		assert.Equal(t, want, r1)
+		assert.Equal(t, want, r2)
 	})
 }

@@ -9,10 +9,11 @@ import (
 )
 
 type Config struct {
-	Debug   bool `name:"debug" usage:"enable debug logs"`
-	Trace   bool `name:"trace" usage:"enable trace logs"`
-	Verbose bool `name:"verbose" short:"v" usage:"enable verbose output"`
-	Quiet   bool `name:"quiet" short:"q" usage:"quiet logs except errors"`
+	Debug       bool `name:"debug" usage:"enable debug logs"`
+	Trace       bool `name:"trace" usage:"enable trace logs"`
+	Verbose     bool `name:"verbose" short:"v" usage:"enable verbose output"`
+	Quiet       bool `name:"quiet" short:"q" usage:"quiet logs except errors"`
+	Concurrency uint `name:"concurrency" short:"c" usage:"maximum number of goroutines to process query, 0 means 1"`
 
 	Index     string `name:"index" short:"i" usage:"index source; exclusive with paths"`
 	RawOutput bool   `name:"raw" usage:"enable raw output"`

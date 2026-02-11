@@ -1,20 +1,27 @@
 package iterx
 
-import "iter"
+import (
+	"iter"
+	"sync"
+)
 
 // ClonableIter shares the source of the iterator.
 type ClonableIter[T any] struct {
 	cache *clonableIterCache[T]
 	index int
+	mux   sync.Mutex
 }
 
 type clonableIterCache[T any] struct {
 	next  func() (T, bool)
 	stop  func()
 	cache []T
+	mux   sync.Mutex
 }
 
 func (c *clonableIterCache[T]) read(index int) (T, bool) {
+	c.mux.Lock()
+	defer c.mux.Unlock()
 	if index < len(c.cache) {
 		return c.cache[index], true
 	}
@@ -41,6 +48,8 @@ func NewClonableIter[T any](it Iter[T]) *ClonableIter[T] {
 
 // Clone returns a cloned iterator that iterates from the beginning of the source.
 func (it *ClonableIter[T]) Clone() *ClonableIter[T] {
+	it.mux.Lock()
+	defer it.mux.Unlock()
 	return &ClonableIter[T]{
 		cache: it.cache,
 		index: 0,
@@ -48,8 +57,10 @@ func (it *ClonableIter[T]) Clone() *ClonableIter[T] {
 }
 
 func (it *ClonableIter[T]) read() (T, bool) {
+	it.mux.Lock()
 	defer func() {
 		it.index++
+		it.mux.Unlock()
 	}()
 	return it.cache.read(it.index)
 }
@@ -68,4 +79,8 @@ func (it *ClonableIter[T]) Values() Iter[T] {
 	}
 }
 
-func (it *ClonableIter[T]) Close() { it.cache.stop() }
+func (it *ClonableIter[T]) Close() {
+	it.mux.Lock()
+	defer it.mux.Unlock()
+	it.cache.stop()
+}
