@@ -1,6 +1,6 @@
 module github.com/berquerant/ndql
 
-go 1.25.6
+go 1.25.7
 
 require (
 	github.com/berquerant/cache v0.5.0
@@ -12,6 +12,7 @@ require (
 	github.com/stretchr/testify v1.11.1
 	github.com/yuin/gopher-lua v1.1.1
 	golang.org/x/exp v0.0.0-20240909161429-701f63a606c0
+	golang.org/x/sync v0.19.0
 	mvdan.cc/sh/v3 v3.12.0
 )
 
@@ -72,7 +73,6 @@ require (
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.27.0 // indirect
 	golang.org/x/net v0.48.0 // indirect
-	golang.org/x/sync v0.19.0 // indirect
 	golang.org/x/sys v0.39.0 // indirect
 	golang.org/x/text v0.32.0 // indirect
 	golang.org/x/tools v0.40.0 // indirect
