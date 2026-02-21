@@ -5,7 +5,7 @@ go 1.25.7
 require (
 	github.com/berquerant/cache v0.5.0
 	github.com/berquerant/structconfig v0.7.0
-	github.com/expr-lang/expr v1.17.7
+	github.com/expr-lang/expr v1.17.8
 	github.com/pingcap/tidb v1.1.0-beta.0.20251126154744-e4e814fdc0af
 	github.com/pingcap/tidb/pkg/parser v0.0.0-20251126154744-e4e814fdc0af
 	github.com/spf13/cobra v1.10.2
