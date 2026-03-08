@@ -25,6 +25,14 @@ func init() {
 var explainCmd = &cobra.Command{
 	Use:   "explain KEY",
 	Short: "Describe ndql resources.",
+	Long: `Describe ndql resources.
+
+## Examples
+
+ndql explain data
+ndql explain syntax
+ndql explain syntax.functions
+ndql explain syntax.functions.expr`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		if len(args) == 0 {
 			fmt.Println(explainShowKeys())
