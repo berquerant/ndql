@@ -1,42 +1,4 @@
-# Syntax
-
-`ndql` uses a SQL-based syntax.
-
-## Implementation Status
-
-- Statements: Currently, only the SELECT statement is implemented.
-- Clauses: FROM and WHERE clauses are available. Other clauses (e.g., GROUP BY, ORDER BY, JOIN) are not yet supported.
-- Operators, Functions: Some operators and functions are not yet implemented. Even if implemented, the behavior may differ from standard SQL specifications.
-
-## Operators
-
-- `AND`
-- `OR`
-- `XOR`
-- `+` (binary)
-- `-` (binary)
-- `*`
-- `/`
-- `%`
-- `<<`
-- `>>`
-- `<`
-- `<=`
-- `=`
-- `<>`
-- `>=`
-- `>`
-- `CASE`
-- `IS NULL`
-- `IS TRUE`
-- `IS FALSE`
-- `REGEXP`
-- `LIKE`
-- `BETWEEN`
-- `-` (unary)
-- `~`
-
-## Functions
+# Functions
 
 - grep(pattern: String, template: String) -> []Node
 - tmpl(template: String) -> []Node
@@ -124,3 +86,30 @@
 - inverse(value: String) -> String
 - env(name: String) -> String
 - envor(name: String, default: String) -> String
+
+# Children
+
+- [abspath](./abspath/README.md)
+- [basename](./basename/README.md)
+- [dir](./dir/README.md)
+- [env](./env/README.md)
+- [envor](./envor/README.md)
+- [expr](./expr/README.md)
+- [extension](./extension/README.md)
+- [format](./format/README.md)
+- [grep](./grep/README.md)
+- [inverse](./inverse/README.md)
+- [len](./len/README.md)
+- [lua](./lua/README.md)
+- [relpath](./relpath/README.md)
+- [sh](./sh/README.md)
+- [size](./size/README.md)
+- [strtotime](./strtotime/README.md)
+- [timeformat](./timeformat/README.md)
+- [tmpl](./tmpl/README.md)
+- [to_bool](./to_bool/README.md)
+- [to_duration](./to_duration/README.md)
+- [to_float](./to_float/README.md)
+- [to_int](./to_int/README.md)
+- [to_string](./to_string/README.md)
+- [to_time](./to_time/README.md)

@@ -25,17 +25,20 @@ func (s *DocumentSet) intoFiles(m *DocumentMap, root string) error {
 
 	c := m.Children()
 	if len(c) == 0 {
-		return nil
+		return os.WriteFile(filepath.Join(root, "README.md"), b.Bytes(), 0644)
 	}
+
 	keys := slices.Collect(maps.Keys(c))
 	slices.Sort(keys)
-	w("")
+	if b.Len() != 0 {
+		w("")
+	}
 	w("# Children")
 	w("")
 	for _, k := range keys {
-		w(fmt.Sprintf("- [%s](./%s)", k, k))
+		w(fmt.Sprintf("- [%s](./%s/README.md)", k, k))
 	}
-	if err := os.WriteFile(root, b.Bytes(), 0644); err != nil {
+	if err := os.WriteFile(filepath.Join(root, "README.md"), b.Bytes(), 0644); err != nil {
 		return err
 	}
 

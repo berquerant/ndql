@@ -3,13 +3,14 @@ CMD := ./cmd/ndql
 THIRD_PARTY_LICENSES := NOTICE
 TOOL := ./tools/run.sh
 DOCS_JSON := cmd/ndql/docs.json
+DOCS := docs
 
 #
 # Build
 #
 
 .PHONY: $(BIN)
-$(BIN):
+$(BIN): generate-docs
 	./bin/build.sh -o $@ $(CMD)
 
 #
@@ -65,9 +66,16 @@ $(THIRD_PARTY_LICENSES):
 generate:
 	go generate ./...
 
+generate-docs: $(DOCS_JSON) $(DOCS)
+
 .PHONY: $(DOCS_JSON)
 $(DOCS_JSON):
 	"$(TOOL)" gendoc gen json > $@
+
+.PHONY: $(DOCS)
+$(DOCS):
+	rm -rf $@
+	"$(TOOL)" gendoc gen files --root $@
 
 .PHONY: clean-generated
 clean-generated:

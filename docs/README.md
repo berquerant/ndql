@@ -1,6 +1,4 @@
-# docs
+# Children
 
-- [Data](./data.md)
-- [Functions](./function.md)
-- [Generators](./generator.md)
-- [Syntax](./syntax.md)
+- [data](./data/README.md)
+- [syntax](./syntax/README.md)
