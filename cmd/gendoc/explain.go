@@ -27,7 +27,7 @@ var explainCmd = &cobra.Command{
 		}
 		v, ok := s.Get(key)
 		if !ok {
-			return errors.New("Not Found")
+			return errors.New("NotFound")
 		}
 		fmt.Println(v)
 		return nil
