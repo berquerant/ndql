@@ -5,6 +5,10 @@ set -o pipefail
 
 readonly name="$1"
 shift
+if [[ "$name" = "gendoc" ]] ; then
+    go run ./cmd/gendoc "$@"
+    exit
+fi
 
 d="$(cd "$(dirname "$0")" || exit 1; pwd)"
 readonly bind="${d}/../bin/tools"

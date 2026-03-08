@@ -13,6 +13,96 @@ import (
 )
 
 // Function calls except aggregations.
+//
+// @title Functions
+// @path syntax.functions
+// @document
+// - grep(pattern: String, template: String) -> []Node
+// - tmpl(template: String) -> []Node
+// - sh(script: String) -> []Node
+// - lua(script: String, entrypoint: String) -> []Node
+// - expr(expression: String) -> []Node
+// - to_int(value) -> Int
+// - to_float(value) -> Float
+// - to_bool(value) -> Bool
+// - to_string(value) -> String
+// - to_time(value) -> Time
+// - to_duration(value) -> Duration
+// - least(value...)
+// - greatest(value...)
+// - coalesce(value...)
+// - if(condition, then, else)
+// - ifnull(expr1, expr2)
+// - nullif(expr1, expr2)
+// - abs(value: Float | Int) -> Float
+// - sqrt(value: Float | Int) -> Float
+// - degrees(value: Float | Int) -> Float
+// - radians(value: Float | Int) -> Float
+// - acos(value: Float | Int) -> Float
+// - asin(value: Float | Int) -> Float
+// - atan(value: Float | Int) -> Float
+// - cos(value: Float | Int) -> Float
+// - sin(value: Float | Int) -> Float
+// - tan(value: Float | Int) -> Float
+// - cot(value: Float | Int) -> Float
+// - ln(value: Float | Int) -> Float
+// - log2(value: Float | Int) -> Float
+// - log10(value: Float | Int) -> Float
+// - exp(value: Float | Int) -> Float
+// - ceil(value: Float | Int) -> Float
+// - floor(value: Float | Int) -> Float
+// - round(value: Float | Int) -> Float
+// - atan2(y: Float | Int, x: Float | Int) -> Float
+// - pow(x: Float | Int, y: Float | Int) -> Float
+// - e() -> Float
+// - pi() -> Float
+// - rand() -> Float
+// - len(value: String) -> Int
+// - size(value: String) -> Int
+// - regexp_count(string: String, pattern: String) -> Int
+// - regexp_instr(string: String, pattern: String) -> Int
+// - regexp_substr(string: String, pattern: String) -> Int
+// - regexp_replace(string: String, pattern: String, replacement: String) -> String
+// - regexp_like(string: String, pattern: String) -> Bool
+// - format(format: String, args...) -> String
+// - lower(value: String) -> String
+// - upper(value: String) -> String
+// - sha2(value: String) -> String
+// - concat_ws(separator: String, args...: []String) -> String
+// - instr(string: String, sub: String) -> Int
+// - instr_count(string: String, sub: String) -> Int
+// - substr(string: String, position: Int) -> String
+// - substr(string: String, position: Int, length: Int) -> String
+// - replace(string: String, from: String, to: String) -> String
+// - trim(string: String) -> String
+// - trim(string: String, cutset: String) -> String
+// - strtotime(string: String, format: String) -> Time
+// - timeformat(t: Time, format: String) -> String
+// - year(t: Time) -> int
+// - month(t: Time) -> int
+// - day(t: Time) -> int
+// - hour(t: Time) -> int
+// - minute(t: Time) -> int
+// - second(t: Time) -> int
+// - dayofweek(t: Time) -> int
+// - dayofyear(t: Time) -> int
+// - newtime(year: Int) -> Time
+// - newtime(year: Int, month: Int) -> Time
+// - newtime(year: Int, month: Int, day: Int) -> Time
+// - newtime(year: Int, month: Int, day: Int, hour: Int) -> Time
+// - newtime(year: Int, month: Int, day: Int, hour: Int, minute: Int) -> Time
+// - newtime(year: Int, month: Int, day: Int, hour: Int, minute: Int, second: Int) -> Time
+// - sleep(second: Int | Float | Duration) -> Int
+// - now() -> Time
+// - dir(path: String) -> String
+// - basename(path: String) -> String
+// - extension(path: String) -> String
+// - abspath(path: String) -> String
+// - relpath(path: String, base: String) -> String
+// - inverse(value: Float | Int) -> Float
+// - inverse(value: String) -> String
+// - env(name: String) -> String
+// - envor(name: String, default: String) -> String
 func (v TreeVisitor) VisitFuncCallExpr(n *FuncCallExpr) (NFunction, error) {
 	name := n.FnName.L
 	f, err := v.visitFuncCallExpr(n)
@@ -472,6 +562,24 @@ func (v TreeVisitor) readFileOrString(d ND) ([]byte, error) {
 // generator
 //
 
+// @title expr(expression: String) -> []Node
+// @path syntax.functions.expr
+// @document
+// This is one of the available generators.
+// It generates nodes using [CEL](https://cel.dev/overview/cel-overview).
+//
+// The following variables are predefined:
+//
+// - e: Environment variables, equivalent to [os.Environ](https://pkg.go.dev/os#Environ).
+// - n: The current node.
+//
+// For example, the following expression determines if the size attribute is less than 1000 and stores the result in the small attribute:
+//
+// ```
+// expr("\"small=\" + string(n.size < 1000)")
+// ```
+//
+// If `@file` is specified as expression, the contents of the file will be used.
 func (v TreeVisitor) funcCallExpr(args []ExprNode) (NFunction, error) {
 	return v.newGeneratorFunction(args, FuncExpr, 1, 1, func(x ...ND) (GenTemplate, error) {
 		b, err := v.readFileOrString(x[0])
@@ -481,6 +589,25 @@ func (v TreeVisitor) funcCallExpr(args []ExprNode) (NFunction, error) {
 		return NewExprGenTemplate(string(b)), nil
 	})
 }
+
+// @title lua(script: String, entrypoint: String) -> []Node
+// @path syntax.functions.lua
+// @document
+// This is one of the available generators.
+// It generates nodes by executing Lua scripts.
+//
+// The entrypoint must specify a function predefined within the script
+// This function must accept exactly one argument and return a string.
+// The first argument is the current node, passed as a Lua table.
+// A global table `E` is predefined, containing environment variables equivalent to [os.Environ](https://pkg.go.dev/os#Environ).
+//
+// For example, the following expression calculates the logarithm of the size attribute and stores the result in the lsize attribute:
+//
+// ```
+// lua("function f(n) return \"lsize=\" .. tostring(math.log(n.size, 10)) end", "f")
+// ```
+//
+// If `@file` is specified as script, the contents of the file will be used.
 func (v TreeVisitor) funcCallLua(args []ExprNode) (NFunction, error) {
 	return v.newGeneratorFunction(args, FuncLua, 2, 2, func(x ...ND) (GenTemplate, error) {
 		b, err := v.readFileOrString(x[0])
@@ -494,6 +621,18 @@ func (v TreeVisitor) funcCallLua(args []ExprNode) (NFunction, error) {
 		return NewLuaGenTemplate(string(b), e.Raw()), nil
 	})
 }
+
+// @title grep(pattern: String, template: String) -> []Node
+// @path syntax.functions.grep
+// @document
+// This is one of the available generators.
+// It greps the file pointed to by the path attribute using a specified pattern, then applies the captured strings to a template.
+//
+// For example, the following expression roughly extracts Go function definitions and stores the function names in the func attribute:
+//
+// ```
+// grep("func (?P<name>[^(]+)", "func=$name")
+// ```
 func (v TreeVisitor) funcCallGrep(args []ExprNode) (NFunction, error) {
 	return v.newGeneratorFunction(args, FuncGrep, 2, 2, func(x ...ND) (GenTemplate, error) {
 		expr, ok := x[0].AsOp().String()
@@ -507,6 +646,26 @@ func (v TreeVisitor) funcCallGrep(args []ExprNode) (NFunction, error) {
 		return NewRegexpGenTemplate(expr.Raw(), tmpl.Raw()), nil
 	})
 }
+
+// @title sh(script: String) -> []Node
+// @path syntax.functions.sh
+// @document
+// This is one of the available generators.
+// It generates nodes by executing bash scripts.
+//
+// Environment variables are available directly within the script.
+// To retrieve attribute values from a node, use the following functions:
+//
+// - get NAME: Retrieves the value of the specified attribute. Returns an empty string if the attribute is not found.
+// - get_or NAME DEFAULT_VALUE: Retrieves the value of the specified attribute. Returns DEFAULT_VALUE if the attribute is not found.
+//
+// For example, the following expression retrieves the first line of the file pointed to by the path attribute and stores it in the head attribute:
+//
+// ```
+// sh("echo head=$(head -n1 $(get path))")
+// ```
+//
+// If `@file` is specified as script, the contents of the file will be used.
 func (v TreeVisitor) funcCallSh(args []ExprNode) (NFunction, error) {
 	return v.newGeneratorFunction(args, FuncSh, 1, 1, func(x ...ND) (GenTemplate, error) {
 		b, err := v.readFileOrString(x[0])
@@ -516,6 +675,26 @@ func (v TreeVisitor) funcCallSh(args []ExprNode) (NFunction, error) {
 		return NewShellGenTemplate(string(b)), nil
 	})
 }
+
+// @title tmpl(template: String) -> []Node
+// @path syntax.functions.tmpl
+// @document
+// This is one of the available generators.
+// It generates nodes using [text/template](https://pkg.go.dev/text/template).
+// The current node is passed as the data for the template.
+//
+// Additionally, the following functions are predefined:
+//
+// - env: Wrapper for [os.Getenv](https://pkg.go.dev/os#Getenv).
+// - envor: Similar to [os.Getenv](https://pkg.go.dev/os#Getenv), but allows a default value as the second argument. It returns the default value if os.Getenv returns an empty string.
+//
+// For example, the following expression sets the type attribute to "dir" if the is_dir attribute is true, and "file" otherwise:
+//
+// ```
+// tmpl("type={{if .is_dir}}dir{{else}}file{{end}}")'
+// ```
+//
+// If `@file` is specified as template, the contents of the file will be used.
 func (v TreeVisitor) funcCallTmpl(args []ExprNode) (NFunction, error) {
 	return v.newGeneratorFunction(args, FuncTmpl, 1, 1, func(x ...ND) (GenTemplate, error) {
 		b, err := v.readFileOrString(x[0])
@@ -530,21 +709,50 @@ func (v TreeVisitor) funcCallTmpl(args []ExprNode) (NFunction, error) {
 // cast
 //
 
+// @title to_int(value) -> Int
+// @path syntax.functions.to_int
+// @document
+// See data.cast
 func (v TreeVisitor) funcCallToInt(args []ExprNode) (NFunction, error) {
 	return v.newUnaryArgUnaryRetFunction(args, FuncToInt, func(x ND) (ND, error) { return x.AsOp().AsInt() })
 }
+
+// @title to_float(value) -> Float
+// @path syntax.functions.to_float
+// @document
+// See data.cast
 func (v TreeVisitor) funcCallToFloat(args []ExprNode) (NFunction, error) {
 	return v.newUnaryArgUnaryRetFunction(args, FuncToFloat, func(x ND) (ND, error) { return x.AsOp().AsFloat() })
 }
+
+// @title to_bool(value) -> Bool
+// @path syntax.functions.to_bool
+// @document
+// See data.cast
 func (v TreeVisitor) funcCallToBool(args []ExprNode) (NFunction, error) {
 	return v.newUnaryArgUnaryRetFunction(args, FuncToBool, func(x ND) (ND, error) { return x.AsOp().AsBool() })
 }
+
+// @title to_string(value) -> String
+// @path syntax.functions.to_string
+// @document
+// See data.cast
 func (v TreeVisitor) funcCallToString(args []ExprNode) (NFunction, error) {
 	return v.newUnaryArgUnaryRetFunction(args, FuncToString, func(x ND) (ND, error) { return x.AsOp().AsString() })
 }
+
+// @title to_time(value) -> Time
+// @path syntax.functions.to_time
+// @document
+// See data.cast
 func (v TreeVisitor) funcCallToTime(args []ExprNode) (NFunction, error) {
 	return v.newUnaryArgUnaryRetFunction(args, FuncToTime, func(x ND) (ND, error) { return x.AsOp().AsTime() })
 }
+
+// @title to_duration(value) -> Duration
+// @path syntax.functions.to_duration
+// @document
+// See data.cast
 func (v TreeVisitor) funcCallToDuration(args []ExprNode) (NFunction, error) {
 	return v.newUnaryArgUnaryRetFunction(args, FuncToDuration, func(x ND) (ND, error) { return x.AsOp().AsDuration() })
 }
@@ -687,12 +895,26 @@ func (v TreeVisitor) funcCallRand(args []ExprNode) (NFunction, error) {
 // string
 //
 
+// @title len(value: String) -> Int
+// @path syntax.functions.len
+// @document
+// The number of characters in a String.
 func (v TreeVisitor) funcCallLen(args []ExprNode) (NFunction, error) {
 	return v.newUnaryArgUnaryRetFunction(args, FuncLen, AsUnaryArgUnaryRetNodeDataFunction(func(x *OP) (*OP, error) { return x.Len() }))
 }
+
+// @title size(value: String) -> Int
+// @path syntax.functions.size
+// @document
+// The number of bytes in a String.
 func (v TreeVisitor) funcCallSize(args []ExprNode) (NFunction, error) {
 	return v.newUnaryArgUnaryRetFunction(args, FuncSize, AsUnaryArgUnaryRetNodeDataFunction(func(x *OP) (*OP, error) { return x.Size() }))
 }
+
+// @title format(format: String, args...) -> String
+// @path syntax.functions.format
+// @document
+// [fmt.Sprintf](https://pkg.go.dev/fmt#Sprintf).
 func (v TreeVisitor) funcCallFormat(args []ExprNode) (NFunction, error) {
 	return v.newVariadicArgUnaryRetFunction(args, FuncFormat, 1, FuncArgMaxLen,
 		AsVariadicArgUnaryRetNodeDataFunction(func(x ...*OP) (*OP, error) {
@@ -700,6 +922,7 @@ func (v TreeVisitor) funcCallFormat(args []ExprNode) (NFunction, error) {
 		}),
 	)
 }
+
 func (v TreeVisitor) funcCallLower(args []ExprNode) (NFunction, error) {
 	return v.newUnaryArgUnaryRetFunction(args, FuncLower, AsUnaryArgUnaryRetNodeDataFunction(func(x *OP) (*OP, error) { return x.Lower() }))
 }
@@ -798,6 +1021,10 @@ func (v TreeVisitor) funcCallTrim(args []ExprNode) (NFunction, error) {
 // time
 //
 
+// @title strtotime(string: String, format: String) -> Time
+// @path syntax.functions.strtotime
+// @document
+// [time.Parse](https://pkg.go.dev/time#Parse).
 func (v TreeVisitor) funcCallStrToTime(args []ExprNode) (NFunction, error) {
 	return v.newVariadicArgUnaryRetFunction(args, FuncStrToTime, 2, 2,
 		AsVariadicArgUnaryRetNodeDataFunction(func(x ...*OP) (*OP, error) {
@@ -805,6 +1032,11 @@ func (v TreeVisitor) funcCallStrToTime(args []ExprNode) (NFunction, error) {
 		}),
 	)
 }
+
+// @title timeformat(t: Time, format: String) -> String
+// @path syntax.functions.timeformat
+// @document
+// [time.Fomat](https://pkg.go.dev/time#Time.Format).
 func (v TreeVisitor) funcCallTimeFormat(args []ExprNode) (NFunction, error) {
 	return v.newVariadicArgUnaryRetFunction(args, FuncTimeFormat, 2, 2,
 		AsVariadicArgUnaryRetNodeDataFunction(func(x ...*OP) (*OP, error) {
@@ -812,6 +1044,7 @@ func (v TreeVisitor) funcCallTimeFormat(args []ExprNode) (NFunction, error) {
 		}),
 	)
 }
+
 func (v TreeVisitor) funcCallYear(args []ExprNode) (NFunction, error) {
 	return v.newUnaryArgUnaryRetFunction(args, FuncYear, AsUnaryArgUnaryRetNodeDataFunction(func(x *OP) (*OP, error) { return x.Year() }))
 }
@@ -854,18 +1087,42 @@ func (v TreeVisitor) funcCallNow(args []ExprNode) (NFunction, error) {
 // path
 //
 
+// @title dir(path: String) -> String
+// @path syntax.functions.dir
+// @document
+// [filepath.Dir](https://pkg.go.dev/path/filepath#Dir).
 func (v TreeVisitor) funcCallDir(args []ExprNode) (NFunction, error) {
 	return v.newUnaryArgUnaryRetFunction(args, FuncDir, AsUnaryArgUnaryRetNodeDataFunction(func(x *OP) (*OP, error) { return x.Dir() }))
 }
+
+// @title basename(path: String) -> String
+// @path syntax.functions.basename
+// @document
+// [filepath.Base](https://pkg.go.dev/path/filepath#Base).
 func (v TreeVisitor) funcCallBasename(args []ExprNode) (NFunction, error) {
 	return v.newUnaryArgUnaryRetFunction(args, FuncBasename, AsUnaryArgUnaryRetNodeDataFunction(func(x *OP) (*OP, error) { return x.Basename() }))
 }
+
+// @title extension(path: String) -> String
+// @path syntax.functions.extension
+// @document
+// [filepath.Ext](https://pkg.go.dev/path/filepath#Ext).
 func (v TreeVisitor) funcCallExtension(args []ExprNode) (NFunction, error) {
 	return v.newUnaryArgUnaryRetFunction(args, FuncExtension, AsUnaryArgUnaryRetNodeDataFunction(func(x *OP) (*OP, error) { return x.Extension() }))
 }
+
+// @title abspath(path: String) -> String
+// @path syntax.functions.abspath
+// @document
+// [filepath.Abs](https://pkg.go.dev/path/filepath#Abs).
 func (v TreeVisitor) funcCallAbsPath(args []ExprNode) (NFunction, error) {
 	return v.newUnaryArgUnaryRetFunction(args, FuncAbsPath, AsUnaryArgUnaryRetNodeDataFunction(func(x *OP) (*OP, error) { return x.AbsPath() }))
 }
+
+// @title relpath(path: String, base: String) -> String
+// @path syntax.functions.relpath
+// @document
+// [filepath.Rel](https://pkg.go.dev/path/filepath#Rel).
 func (v TreeVisitor) funcCallRelPath(args []ExprNode) (NFunction, error) {
 	return v.newVariadicArgUnaryRetFunction(args, FuncRelPath, 2, 2,
 		AsVariadicArgUnaryRetNodeDataFunction(func(x ...*OP) (*OP, error) {
@@ -878,9 +1135,22 @@ func (v TreeVisitor) funcCallRelPath(args []ExprNode) (NFunction, error) {
 // etc
 //
 
+// @title inverse(value: Float | Int) -> Float, inverse(value: String) -> String
+// @path syntax.functions.inverse
+// @document
+// ## Float, Int
+// Calculate inverse of the value.
+//
+// ## String
+// Reverse the String.
 func (v TreeVisitor) funcCallInverse(args []ExprNode) (NFunction, error) {
 	return v.newUnaryArgUnaryRetFunction(args, FuncInverse, AsUnaryArgUnaryRetNodeDataFunction(func(x *OP) (*OP, error) { return x.Inverse() }))
 }
+
+// @title envor(name: String, default: String) -> String
+// @path syntax.functions.envor
+// @document
+// [os.Getenv](https://pkg.go.dev/os#Getenv), returns default if empty.
 func (v TreeVisitor) funcCallEnvOr(args []ExprNode) (NFunction, error) {
 	return v.newVariadicArgUnaryRetFunction(args, FuncEnvOr, 2, 2,
 		AsVariadicArgUnaryRetNodeDataFunction(func(x ...*OP) (*OP, error) {
@@ -888,6 +1158,11 @@ func (v TreeVisitor) funcCallEnvOr(args []ExprNode) (NFunction, error) {
 		}),
 	)
 }
+
+// @title env(name: String) -> String
+// @path syntax.functions.env
+// @document
+// [os.Getenv](https://pkg.go.dev/os#Getenv).
 func (v TreeVisitor) funcCallEnv(args []ExprNode) (NFunction, error) {
 	return v.newUnaryArgUnaryRetFunction(args, FuncEnv, AsUnaryArgUnaryRetNodeDataFunction(func(x *OP) (*OP, error) { return x.Env() }))
 }

@@ -6,6 +6,19 @@ import (
 )
 
 // Data is the smallest unit of data in ndql.
+//
+// @title Data Type
+// @path data.type
+// @document
+// `ndql` supports the following data types (corresponding to Go types):
+//
+// - Null (nil)
+// - Float (float64)
+// - Int (int64)
+// - Bool (bool)
+// - String (string)
+// - Time (time.Time)
+// - Duration (time.Duration)
 type Data interface {
 	IsData()
 	Display() string
