@@ -56,9 +56,7 @@ func (m *Map[K, V]) Merge(other *Map[K, V]) {
 		other.mux.RUnlock()
 		m.mux.Unlock()
 	}()
-	for k, v := range other.m {
-		m.m[k] = v
-	}
+	maps.Copy(m.m, other.m)
 }
 
 // Unwrap returns a cloned internal map.

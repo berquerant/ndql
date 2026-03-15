@@ -125,7 +125,7 @@ func (v *Op) NewTime(param ...*Op) (*Op, error) {
 		pp = pp[1:]
 		return int(x.Raw()), ok, false
 	}
-	for i := 0; i < len(xs); i++ {
+	for i := range xs {
 		x, ok, end := get()
 		if end {
 			break

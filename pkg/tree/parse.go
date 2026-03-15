@@ -59,7 +59,7 @@ func parseGenResultEqualPairs(b []byte) ([]*N, error) {
 	sc := bufio.NewScanner(bytes.NewBuffer(b))
 	for sc.Scan() {
 		n := node.New()
-		for _, p := range strings.Split(sc.Text(), ",") {
+		for p := range strings.SplitSeq(sc.Text(), ",") {
 			ss := strings.SplitN(p, "=", 2)
 			if len(ss) == 2 {
 				n.Set(ss[0], node.String(ss[1]))

@@ -51,7 +51,7 @@ func (g ExprGenTemplate) Generate(_ context.Context, n *N) ([]byte, error) {
 	if err != nil {
 		return nil, fmt.Errorf("%w: failed to run expr", errors.Join(ErrGenTemplate, err))
 	}
-	return []byte(fmt.Sprint(r)), nil
+	return fmt.Append(nil, r), nil
 }
 
 func (g ExprGenTemplate) newEnv(n *N) map[string]any {
