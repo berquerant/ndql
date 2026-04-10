@@ -6643,8 +6643,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ## google.golang.org/genproto/googleapis/api
 
 * Name: google.golang.org/genproto/googleapis/api
-* Version: v0.0.0-20240318140521-94a12d6c2237
-* License: [Apache-2.0](https://github.com/googleapis/go-genproto/blob/94a12d6c2237/googleapis/api/LICENSE)
+* Version: v0.0.0-20251202230838-ff82c1b0f217
+* License: [Apache-2.0](https://github.com/googleapis/go-genproto/blob/ff82c1b0f217/googleapis/api/LICENSE)
 
 ```
 
@@ -6853,8 +6853,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ## google.golang.org/genproto/googleapis/rpc/status
 
 * Name: google.golang.org/genproto/googleapis/rpc/status
-* Version: v0.0.0-20250818200422-3122310a409c
-* License: [Apache-2.0](https://github.com/googleapis/go-genproto/blob/3122310a409c/googleapis/rpc/LICENSE)
+* Version: v0.0.0-20251202230838-ff82c1b0f217
+* License: [Apache-2.0](https://github.com/googleapis/go-genproto/blob/ff82c1b0f217/googleapis/rpc/LICENSE)
 
 ```
 
@@ -7063,8 +7063,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ## google.golang.org/grpc
 
 * Name: google.golang.org/grpc
-* Version: v1.63.2
-* License: [Apache-2.0](https://github.com/grpc/grpc-go/blob/v1.63.2/LICENSE)
+* Version: v1.79.3
+* License: [Apache-2.0](https://github.com/grpc/grpc-go/blob/v1.79.3/LICENSE)
 
 ```
 
@@ -7273,8 +7273,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ## google.golang.org/protobuf
 
 * Name: google.golang.org/protobuf
-* Version: v1.36.8
-* License: [BSD-3-Clause](https://github.com/protocolbuffers/protobuf-go/blob/v1.36.8/LICENSE)
+* Version: v1.36.10
+* License: [BSD-3-Clause](https://github.com/protocolbuffers/protobuf-go/blob/v1.36.10/LICENSE)
 
 ```
 Copyright (c) 2018 The Go Authors. All rights reserved.
