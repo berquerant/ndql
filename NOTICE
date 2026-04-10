@@ -6433,8 +6433,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ## golang.org/x/mod/semver
 
 * Name: golang.org/x/mod/semver
-* Version: v0.33.0
-* License: [BSD-3-Clause](https://cs.opensource.google/go/x/mod/+/v0.33.0:LICENSE)
+* Version: v0.34.0
+* License: [BSD-3-Clause](https://cs.opensource.google/go/x/mod/+/v0.34.0:LICENSE)
 
 ```
 Copyright 2009 The Go Authors.
@@ -6468,8 +6468,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ## golang.org/x/net
 
 * Name: golang.org/x/net
-* Version: v0.50.0
-* License: [BSD-3-Clause](https://cs.opensource.google/go/x/net/+/v0.50.0:LICENSE)
+* Version: v0.52.0
+* License: [BSD-3-Clause](https://cs.opensource.google/go/x/net/+/v0.52.0:LICENSE)
 
 ```
 Copyright 2009 The Go Authors.
@@ -6538,8 +6538,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ## golang.org/x/sys/unix
 
 * Name: golang.org/x/sys/unix
-* Version: v0.41.0
-* License: [BSD-3-Clause](https://cs.opensource.google/go/x/sys/+/v0.41.0:LICENSE)
+* Version: v0.42.0
+* License: [BSD-3-Clause](https://cs.opensource.google/go/x/sys/+/v0.42.0:LICENSE)
 
 ```
 Copyright 2009 The Go Authors.
@@ -6573,8 +6573,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ## golang.org/x/text
 
 * Name: golang.org/x/text
-* Version: v0.34.0
-* License: [BSD-3-Clause](https://cs.opensource.google/go/x/text/+/v0.34.0:LICENSE)
+* Version: v0.35.0
+* License: [BSD-3-Clause](https://cs.opensource.google/go/x/text/+/v0.35.0:LICENSE)
 
 ```
 Copyright 2009 The Go Authors.
@@ -6608,8 +6608,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ## golang.org/x/tools
 
 * Name: golang.org/x/tools
-* Version: v0.42.0
-* License: [BSD-3-Clause](https://cs.opensource.google/go/x/tools/+/v0.42.0:LICENSE)
+* Version: v0.43.0
+* License: [BSD-3-Clause](https://cs.opensource.google/go/x/tools/+/v0.43.0:LICENSE)
 
 ```
 Copyright 2009 The Go Authors.
@@ -7336,8 +7336,8 @@ SOFTWARE.```
 ## mvdan.cc/sh/v3
 
 * Name: mvdan.cc/sh/v3
-* Version: v3.12.0
-* License: [BSD-3-Clause](https://github.com/mvdan/sh/blob/v3.12.0/LICENSE)
+* Version: v3.13.0
+* License: [BSD-3-Clause](https://github.com/mvdan/sh/blob/v3.13.0/LICENSE)
 
 ```
 Copyright (c) 2016, Daniel Martí. All rights reserved.
