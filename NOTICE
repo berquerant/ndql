@@ -29,8 +29,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ## github.com/berquerant/cache
 
 * Name: github.com/berquerant/cache
-* Version: v0.5.0
-* License: [MIT](https://github.com/berquerant/cache/blob/v0.5.0/LICENSE)
+* Version: v0.5.1
+* License: [MIT](https://github.com/berquerant/cache/blob/v0.5.1/LICENSE)
 
 ```
 MIT License
@@ -5658,8 +5658,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ## github.com/yuin/gopher-lua
 
 * Name: github.com/yuin/gopher-lua
-* Version: v1.1.1
-* License: [MIT](https://github.com/yuin/gopher-lua/blob/v1.1.1/LICENSE)
+* Version: v1.1.2
+* License: [MIT](https://github.com/yuin/gopher-lua/blob/v1.1.2/LICENSE)
 
 ```
 The MIT License (MIT)
@@ -7336,8 +7336,8 @@ SOFTWARE.```
 ## mvdan.cc/sh/v3
 
 * Name: mvdan.cc/sh/v3
-* Version: v3.13.0
-* License: [BSD-3-Clause](https://github.com/mvdan/sh/blob/v3.13.0/LICENSE)
+* Version: v3.13.1
+* License: [BSD-3-Clause](https://github.com/mvdan/sh/blob/v3.13.1/LICENSE)
 
 ```
 Copyright (c) 2016, Daniel Martí. All rights reserved.
