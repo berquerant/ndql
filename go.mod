@@ -1,6 +1,6 @@
 module github.com/berquerant/ndql
 
-go 1.26.2
+go 1.26.4
 
 require (
 	github.com/berquerant/cache v0.5.1
