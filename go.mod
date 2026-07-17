@@ -4,16 +4,16 @@ go 1.26.4
 
 require (
 	github.com/berquerant/cache v0.5.1
-	github.com/berquerant/structconfig v0.7.0
+	github.com/berquerant/structconfig v0.8.0
 	github.com/expr-lang/expr v1.17.8
 	github.com/pingcap/tidb v1.1.0-beta.0.20251126154744-e4e814fdc0af
 	github.com/pingcap/tidb/pkg/parser v0.0.0-20251126154744-e4e814fdc0af
 	github.com/spf13/cobra v1.10.2
 	github.com/stretchr/testify v1.11.1
 	github.com/yuin/gopher-lua v1.1.2
-	golang.org/x/exp v0.0.0-20240909161429-701f63a606c0
-	golang.org/x/sync v0.20.0
-	golang.org/x/tools v0.43.0
+	golang.org/x/exp v0.0.0-20260410095643-746e56fc9e2f
+	golang.org/x/sync v0.22.0
+	golang.org/x/tools v0.47.0
 	mvdan.cc/sh/v3 v3.13.1
 )
 
@@ -73,10 +73,10 @@ require (
 	go.uber.org/atomic v1.11.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.27.0 // indirect
-	golang.org/x/mod v0.34.0 // indirect
-	golang.org/x/net v0.52.0 // indirect
-	golang.org/x/sys v0.42.0 // indirect
-	golang.org/x/text v0.35.0 // indirect
+	golang.org/x/mod v0.37.0 // indirect
+	golang.org/x/net v0.56.0 // indirect
+	golang.org/x/sys v0.46.0 // indirect
+	golang.org/x/text v0.38.0 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20240318140521-94a12d6c2237 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20250818200422-3122310a409c // indirect
 	google.golang.org/grpc v1.63.2 // indirect
