@@ -58,8 +58,8 @@ SOFTWARE.
 ## github.com/berquerant/structconfig
 
 * Name: github.com/berquerant/structconfig
-* Version: v0.7.0
-* License: [MIT](https://github.com/berquerant/structconfig/blob/v0.7.0/LICENSE)
+* Version: v0.9.0
+* License: [MIT](https://github.com/berquerant/structconfig/blob/v0.9.0/LICENSE)
 
 ```
 MIT License
@@ -6398,8 +6398,8 @@ THE SOFTWARE.
 ## golang.org/x/exp
 
 * Name: golang.org/x/exp
-* Version: v0.0.0-20240909161429-701f63a606c0
-* License: [BSD-3-Clause](https://cs.opensource.google/go/x/exp/+/701f63a6:LICENSE)
+* Version: v0.0.0-20260410095643-746e56fc9e2f
+* License: [BSD-3-Clause](https://cs.opensource.google/go/x/exp/+/746e56fc:LICENSE)
 
 ```
 Copyright 2009 The Go Authors.
@@ -6433,8 +6433,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ## golang.org/x/mod/semver
 
 * Name: golang.org/x/mod/semver
-* Version: v0.34.0
-* License: [BSD-3-Clause](https://cs.opensource.google/go/x/mod/+/v0.34.0:LICENSE)
+* Version: v0.38.0
+* License: [BSD-3-Clause](https://cs.opensource.google/go/x/mod/+/v0.38.0:LICENSE)
 
 ```
 Copyright 2009 The Go Authors.
@@ -6468,8 +6468,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ## golang.org/x/net
 
 * Name: golang.org/x/net
-* Version: v0.52.0
-* License: [BSD-3-Clause](https://cs.opensource.google/go/x/net/+/v0.52.0:LICENSE)
+* Version: v0.57.0
+* License: [BSD-3-Clause](https://cs.opensource.google/go/x/net/+/v0.57.0:LICENSE)
 
 ```
 Copyright 2009 The Go Authors.
@@ -6503,8 +6503,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ## golang.org/x/sync
 
 * Name: golang.org/x/sync
-* Version: v0.20.0
-* License: [BSD-3-Clause](https://cs.opensource.google/go/x/sync/+/v0.20.0:LICENSE)
+* Version: v0.22.0
+* License: [BSD-3-Clause](https://cs.opensource.google/go/x/sync/+/v0.22.0:LICENSE)
 
 ```
 Copyright 2009 The Go Authors.
@@ -6538,8 +6538,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ## golang.org/x/sys/unix
 
 * Name: golang.org/x/sys/unix
-* Version: v0.42.0
-* License: [BSD-3-Clause](https://cs.opensource.google/go/x/sys/+/v0.42.0:LICENSE)
+* Version: v0.47.0
+* License: [BSD-3-Clause](https://cs.opensource.google/go/x/sys/+/v0.47.0:LICENSE)
 
 ```
 Copyright 2009 The Go Authors.
@@ -6573,8 +6573,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ## golang.org/x/text
 
 * Name: golang.org/x/text
-* Version: v0.35.0
-* License: [BSD-3-Clause](https://cs.opensource.google/go/x/text/+/v0.35.0:LICENSE)
+* Version: v0.40.0
+* License: [BSD-3-Clause](https://cs.opensource.google/go/x/text/+/v0.40.0:LICENSE)
 
 ```
 Copyright 2009 The Go Authors.
@@ -6608,8 +6608,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ## golang.org/x/tools
 
 * Name: golang.org/x/tools
-* Version: v0.43.0
-* License: [BSD-3-Clause](https://cs.opensource.google/go/x/tools/+/v0.43.0:LICENSE)
+* Version: v0.48.0
+* License: [BSD-3-Clause](https://cs.opensource.google/go/x/tools/+/v0.48.0:LICENSE)
 
 ```
 Copyright 2009 The Go Authors.
