@@ -6,7 +6,7 @@ set -o pipefail
 readonly d="$(cd "$(dirname "$0")" || exit 1 ; pwd)"
 
 go_licenses() {
-    "${d}/../tools/run.sh" go-licenses "$@"
+    mise x -- go-licenses "$@"
 }
 
 readonly ignore='--ignore "github.com/berquerant/ndql/"'
