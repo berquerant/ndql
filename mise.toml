@@ -1,0 +1,69 @@
+[tools]
+go = "1.26"
+golangci-lint = "2.12.2"
+"go:github.com/google/go-licenses/v2" = "2.0.1"
+"go:golang.org/x/tools/cmd/stringer" = "v0.49.0"
+
+[tasks.build]
+description = "Build ndql binary"
+depends = ["generate-docs"]
+run = "./bin/build.sh -o bin/ndql ./cmd/ndql"
+
+[tasks.test]
+description = "Run all unit tests"
+run = "go test -race -cover ./..."
+
+[tasks.test-tree]
+description = "Run pkg/tree tests"
+run = "go test -race -cover ./pkg/tree/..."
+
+[tasks.vet]
+description = "Run go vet"
+run = "go vet ./..."
+
+[tasks.golangci-lint]
+description = "Run golangci-lint"
+run = """
+golangci-lint config verify -v
+golangci-lint run
+"""
+
+[tasks.check-licenses-diff]
+description = "Check diff of NOTICE"
+run = "git diff --exit-code NOTICE"
+
+[tasks.check-licenses]
+description = "Check license headers and NOTICE"
+depends = ["check-licenses-diff"]
+run = "./hack/license.sh check"
+
+[tasks.lint]
+description = "Run all linters"
+depends = ["check-licenses", "vet", "golangci-lint"]
+
+[tasks.NOTICE]
+description = "Regenerate NOTICE"
+run = "./hack/license.sh report > NOTICE"
+
+[tasks.generate]
+description = "Run go generate"
+run = "go generate ./..."
+
+[tasks.docs-json]
+description = "Generate cmd/ndql/docs.json"
+run = "go run ./cmd/gendoc gen json > cmd/ndql/docs.json"
+
+[tasks.docs-files]
+description = "Generate docs/"
+run = """
+rm -rf docs
+go run ./cmd/gendoc gen files --root docs
+"""
+
+[tasks.generate-docs]
+description = "Generate all documentation"
+depends = ["docs-json", "docs-files"]
+
+[tasks.clean-generated]
+description = "Clean generated files"
+run = 'find . -name "*_generated.go" -type f -delete'

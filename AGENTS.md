@@ -49,11 +49,9 @@ Go version: see `go.mod`
 ├── hack/
 │   ├── license.sh     # License header checker / reporter
 │   └── notice-template.md
-├── tools/
-│   └── run.sh         # Wrapper to run pinned tool versions (golangci-lint, gendoc, …)
 ├── bin/               # Compiled binaries (git-ignored)
 ├── version/           # Version string
-├── Makefile
+├── mise.toml          # Tool versions and task runner definitions
 ├── go.mod
 ├── go.sum
 ├── .golangci.yml
@@ -110,7 +108,7 @@ Go version: see `go.mod`
 ### Build the binary
 
 ```sh
-make          # generates docs then builds bin/ndql
+mise run build         # generates docs then builds bin/ndql
 bin/ndql help
 ```
 
@@ -119,8 +117,8 @@ The build script is `bin/build.sh`.
 ### Run tests
 
 ```sh
-make test              # all packages with race detector and coverage
-make test-tree         # pkg/tree only
+mise run test          # all packages with race detector and coverage
+mise run test-tree     # pkg/tree only
 ```
 
 Direct Go command:
@@ -132,9 +130,9 @@ go test -race -cover ./...
 ### Lint
 
 ```sh
-make lint              # check-licenses + vet + golangci-lint
-make vet               # go vet ./...
-make golangci-lint     # golangci-lint config verify + run
+mise run lint          # check-licenses + vet + golangci-lint
+mise run vet           # go vet ./...
+mise run golangci-lint # golangci-lint config verify + run
 ```
 
 Lint configuration: `.golangci.yml`
@@ -142,9 +140,9 @@ Lint configuration: `.golangci.yml`
 ### Code generation
 
 ```sh
-make generate          # go generate ./...
-make generate-docs     # regenerate cmd/ndql/docs.json and docs/
-make clean-generated   # delete all *_generated.go files
+mise run generate          # go generate ./...
+mise run generate-docs     # regenerate cmd/ndql/docs.json and docs/
+mise run clean-generated   # delete all *_generated.go files
 ```
 
 Generated files — **do not edit by hand**:
@@ -155,8 +153,8 @@ Generated files — **do not edit by hand**:
 ### Third-party licenses
 
 ```sh
-make NOTICE            # regenerate NOTICE file
-make check-licenses    # verify headers are present and NOTICE is up-to-date
+mise run NOTICE            # regenerate NOTICE file
+mise run check-licenses    # verify headers are present and NOTICE is up-to-date
 ```
 
 ---
@@ -169,8 +167,8 @@ make check-licenses    # verify headers are present and NOTICE is up-to-date
    ```
 2. Register it in the same file's function dispatch table.
 3. Add unit tests in `pkg/tree/` (files named `*_test.go`).
-4. Regenerate docs: `make generate-docs`.
-5. Verify: `make test && make lint`.
+4. Regenerate docs: `mise run generate-docs`.
+5. Verify: `mise run test && mise run lint`.
 
 ---
 
@@ -179,7 +177,7 @@ make check-licenses    # verify headers are present and NOTICE is up-to-date
 1. Create `cmd/ndql/<subcommand>.go` with a `cobra.Command` and an `init()` that registers it on `rootCmd`.
 2. Add the corresponding `Mode` constant to `pkg/config/mode.go` and a `newXxxSources` method on `Config`.
 3. Implement the execution logic under `pkg/run/`.
-4. Run `make generate-docs` if the command should appear in embedded docs.
+4. Run `mise run generate-docs` if the command should appear in embedded docs.
 
 ---
 
@@ -204,4 +202,5 @@ Steps: `go test -race -cover ./...`
 ## Release
 
 Managed by GoReleaser: `.goreleaser.yaml`  
-Pinned tool versions are managed through `tools/go.mod` and executed via `tools/run.sh`.
+Pinned tool versions are managed through `mise.toml`.
+
