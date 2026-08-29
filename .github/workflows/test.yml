@@ -10,8 +10,13 @@ on:
     branches:
       - main
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   lint:
+    name: lint
     timeout-minutes: 10
     permissions:
       contents: read
@@ -26,6 +31,7 @@ jobs:
         run: mise run lint
 
   test-unit:
+    name: test-unit
     timeout-minutes: 10
     permissions:
       contents: read
@@ -40,6 +46,7 @@ jobs:
         run: mise run test
 
   govulncheck:
+    name: govulncheck
     timeout-minutes: 5
     permissions:
       contents: read
