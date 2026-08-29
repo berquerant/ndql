@@ -4,8 +4,8 @@ builds:
   - main: ./cmd/ndql
     id: ndql
     binary: ndql
-    env:
-      - CGO_ENABLED=0
+    # env:
+    #   - CGO_ENABLED=0
     goos:
       - linux
       - darwin
