@@ -10,7 +10,7 @@ builds:
       - linux
       - darwin
     goarch:
-      # - amd64
+      - amd64
       - arm64
     flags:
       - -v
