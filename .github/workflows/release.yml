@@ -14,26 +14,9 @@ concurrency:
 jobs:
   goreleaser:
     name: goreleaser
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
     permissions:
-      contents: write # for creating releases
-    steps:
-      - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          fetch-depth: 0
-          persist-credentials: "false"
-
-      - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
-        with:
-          cache: false
-
-      - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@a4f02ab5355a589de60d917a659ce617ed19b3de # v7.3.0
-        with:
-          distribution: goreleaser
-          version: "~> v2"
-          args: release --clean
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      contents: write # create GitHub releases and upload release assets
+    uses: berquerant/reusable-workflows/.github/workflows/goreleaser-release.yml@v0.3.0
+    with:
+      setup-mode: mise
+      timeout-minutes: 15
